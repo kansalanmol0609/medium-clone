@@ -1,17 +1,20 @@
 //libs
-import Link from "next/link";
 import React from "react";
+import Image from "next/image";
+import Link from "next/link";
 
 function Header() {
 	return (
-		<header className='flex justify-between p-5 max-w-7xl mx-auto'>
+		<header className='flex justify-between items-center p-5 max-w-7xl mx-auto'>
 			<div className='flex items-center space-x-5'>
 				<Link href='/'>
-					<img
-						className='w-44 object-contain cursor-pointer'
-						src='https://pgcmls.info/images/editor/pgcmls/Medium_png.png'
-						alt=''
-					/>
+					<div className='w-32 md:w-44 h-8 md:h-11  object-contain cursor-pointer relative'>
+						<Image
+							layout='fill'
+							src='/images/medium-expanded-logo.png'
+							alt=''
+						/>
+					</div>
 				</Link>
 
 				<div className='hidden md:inline-flex items-center space-x-5'>

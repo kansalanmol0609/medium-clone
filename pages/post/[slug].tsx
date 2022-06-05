@@ -2,9 +2,12 @@
 import React from "react";
 import type { GetStaticProps } from "next";
 import PortableText from "react-portable-text";
+import Head from "next/head";
+import Image from "next/image";
 
 //utils
 import { sanityClient, urlFor } from "@/sanity";
+import { getImageDimensions } from "@sanity/asset-utils";
 
 //components
 import { CommentsForm } from "@/components/CommentsForm";
@@ -12,7 +15,8 @@ import { CommentsSection } from "@/components/CommentsSection";
 
 //types
 import { Post } from "@/types";
-import Head from "next/head";
+
+const AUTHOR_IMAGE_SIZE = "40";
 
 type Props = {
 	post: Post;
@@ -29,11 +33,14 @@ const Post = (props: Props) => {
 				<title>Medium - {post.title}</title>
 			</Head>
 			<main>
-				<img
-					className='w-full h-40 object-cover'
-					src={urlFor(post.mainImage).url()!}
-					alt=''
-				/>
+				<div className='w-full h-44 relative'>
+					<Image
+						className='object-cover'
+						layout='fill'
+						src={urlFor(post.mainImage).url()!}
+						alt=''
+					/>
+				</div>
 
 				<article className='max-w-3xl mx-auto p-5'>
 					<h1 className='text-3xl mt-10 mb-3'>{post.title}</h1>
@@ -42,8 +49,10 @@ const Post = (props: Props) => {
 					</h2>
 
 					<div className='flex items-center space-x-2'>
-						<img
-							className='h-10 w-10 rounded-full'
+						<Image
+							width={AUTHOR_IMAGE_SIZE}
+							height={AUTHOR_IMAGE_SIZE}
+							className='rounded-full'
 							src={urlFor(post.author.image).url()!}
 							alt=''
 						/>
@@ -80,6 +89,28 @@ const Post = (props: Props) => {
 										{children}
 									</a>
 								),
+								image: ({ asset, ...props }: any) => {
+									const { height, width, aspectRatio } =
+										getImageDimensions(asset);
+
+									return (
+										<div
+											className='relative mx-auto'
+											style={{
+												height: `${height}px`,
+												width: `${width}px`,
+												maxWidth: "100%",
+											}}
+										>
+											<Image
+												layout='fill'
+												src={urlFor(asset).url()!}
+												alt='image'
+												{...props}
+											/>
+										</div>
+									);
+								},
 							}}
 						/>
 					</div>

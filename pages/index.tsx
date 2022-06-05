@@ -1,6 +1,7 @@
 //libs
 import type { NextPage } from "next";
 import Head from "next/head";
+import Image from "next/image";
 
 //components
 import { Post } from "@/components/Post";
@@ -43,11 +44,9 @@ const Home: NextPage<Props> = (props) => {
 					</h2>
 				</div>
 
-				<img
-					className='hidden md:inline-flex h-32 lg:h-56 px-10'
-					src='https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Medium_icon.svg/1280px-Medium_icon.svg.png'
-					alt=''
-				/>
+				<div className='hidden md:inline-flex h-32 w-36 lg:h-56 lg:w-60 mx-10 relative'>
+					<Image layout='fill' src='/images/medium-logo.png' alt='' />
+				</div>
 			</div>
 
 			{/* Posts */}
